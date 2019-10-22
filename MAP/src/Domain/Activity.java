@@ -3,11 +3,10 @@ package Domain;
 public class Activity {
 
     private String name;
-    private String teacherName;
+    //private String teacherName;
 
-    public Activity(String name, String teacherName) {
+    public Activity(String name) {
         this.name = name;
-        this.teacherName = teacherName;
     }
 
     public String getName() {
@@ -18,19 +17,12 @@ public class Activity {
         this.name = name;
     }
 
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
-    }
 
     @Override
     public String toString() {
         return "Activity{" +
                 "name='" + name + '\'' +
-                ", teacherName='" + teacherName + '\'' +
+                ", teacherName='" +  '\'' +
                 '}';
     }
 }

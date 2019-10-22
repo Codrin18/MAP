@@ -1,6 +1,7 @@
 import Controller.Controller;
 import Domain.Activity;
 import Domain.Discipline;
+import Domain.Relation;
 import Domain.Teacher;
 
 import javax.sound.midi.Soundbank;
@@ -19,7 +20,7 @@ public class UI {
     {
 
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter a name for the teacher: ");
         String name =  sc.nextLine();
         Teacher t = new Teacher(name);
@@ -30,14 +31,11 @@ public class UI {
     public void addActivity()
     {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter a name for the activity: ");
         String name = sc.nextLine();
-        sc.nextLine();
-        System.out.println("Please enter the name of the teacher: ");
-        String teacherName = sc.nextLine();
 
-        Activity a = new Activity(name,teacherName);
+        Activity a = new Activity(name);
 
         this.ctrl.addActivity(a);
     }
@@ -45,7 +43,7 @@ public class UI {
     public void addDiscipline()
     {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter a name for the discipline: ");
         String name = sc.nextLine();
 
@@ -54,16 +52,35 @@ public class UI {
         this.ctrl.addDiscipline(d);
     }
 
+    public void addRelation()
+    {
+        Scanner sc =  new Scanner(System.in);
+        //sc.nextLine();
+        System.out.println("Please enter key1: ");
+        String key1 = sc.nextLine();
+
+        //sc.nextLine();
+        System.out.println("Please enter key2: ");
+        String key2 = sc.nextLine();
+
+        Relation<String> r = new Relation<>(key1,key2);
+
+        this.ctrl.addRelation(r);
+    }
+
     public void add()
     {
+        Scanner sc = new Scanner(System.in);
+        //sc.nextLine();
         int choice = 1;
 
         while(choice != 0)
         {
+
             System.out.println("1. Add a new teacher");
             System.out.println("2. Add a new activity");
             System.out.println("3. Add a new discipline");
-            Scanner sc = new Scanner(System.in);
+            System.out.println("4. Add a new relation");
             System.out.println("Please choose an option: ");
             choice = sc.nextInt();
 
@@ -77,6 +94,9 @@ public class UI {
                     break;
                 case 3:
                     this.addDiscipline();
+                    break;
+                case 4:
+                    this.addRelation();
                     break;
             }
         }
@@ -222,6 +242,52 @@ public class UI {
         }
     }
 
+    public void getAllRelations()
+    {
+        ArrayList<Relation> relations = this.ctrl.getAllRelations();
+
+        for(int i=0; i < relations.size(); i++)
+        {
+            System.out.printf("\t%d-%s\n",i,relations.get(i));
+        }
+    }
+
+    public void getRelationByIndex()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please introduce the index: ");
+        int index = sc.nextInt();
+
+        Relation<String> r = this.ctrl.getRelationByIndex(index);
+
+        System.out.printf("\t%s",r);
+    }
+
+    public void getRelations()
+    {
+        Scanner sc = new Scanner(System.in);
+
+        int choice = 1;
+
+        while(choice != 0)
+        {
+            System.out.println("1. Get all relations");
+            System.out.println("2. Get a relation by index");
+            System.out.println("Please choose an option: ");
+            choice = sc.nextInt();
+
+            switch (choice)
+            {
+                case 1:
+                    this.getAllRelations();
+                    break;
+                case 2:
+                    this.getRelationByIndex();
+                    break;
+            }
+        }
+    }
+
     public void retrieve()
     {
         Scanner sc = new Scanner(System.in);
@@ -232,6 +298,7 @@ public class UI {
             System.out.println("1. Get teachers");
             System.out.println("2. Get activities");
             System.out.println("3. Get disciplines");
+            System.out.println("4. Get relations");
 
             System.out.println("Please choose an option: ");
             choice = sc.nextInt();
@@ -246,6 +313,9 @@ public class UI {
                 case 3:
                     this.getDisciplines();
                     break;
+                case 4:
+                    this.getRelations();
+                    break;
             }
         }
     }
@@ -253,10 +323,10 @@ public class UI {
     public void updateTeacher()
     {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter the index: ");
         int index = sc.nextInt();
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter the new name: ");
         String name = sc.nextLine();
         this.ctrl.updateTeacherByIndex(index,name);
@@ -265,28 +335,41 @@ public class UI {
     public void updateActivity()
     {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter the index: ");
         int index = sc.nextInt();
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter the new name: ");
         String name = sc.nextLine();
-        sc.nextLine();
-        System.out.println("Please enter the teacher name: ");
-        String teacherName = sc.nextLine();
-        this.ctrl.updateActivityByIndex(index,name,teacherName);
+        this.ctrl.updateActivityByIndex(index,name);
     }
 
     public void updateDiscipline()
     {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter the index: ");
         int index = sc.nextInt();
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter the new name: ");
         String name = sc.nextLine();
         this.ctrl.updateDisciplineByIndex(index,name);
+    }
+
+    public void updateRelation()
+    {
+        Scanner sc =  new Scanner(System.in);
+        //sc.nextLine();
+        System.out.println("Please enter the index: ");
+        int index = sc.nextInt();
+        //sc.nextLine();
+        System.out.println("Please enter key1: ");
+        String key1 = sc.nextLine();
+        //sc.nextLine();
+        System.out.println("Please enter key2: ");
+        String key2 = sc.nextLine();
+
+        this.ctrl.updateRelationByIndex(index,key1,key2);
     }
 
     public void update()
@@ -299,6 +382,7 @@ public class UI {
             System.out.println("1.Update teacher");
             System.out.println("2.Update activity");
             System.out.println("3.Update discipline");
+            System.out.println("4.Update relation");
 
             System.out.println("Please choose an option: ");
             choice = sc.nextInt();
@@ -314,6 +398,8 @@ public class UI {
                 case 3:
                     this.updateDiscipline();
                     break;
+                case 4:
+                    this.updateRelation();
             }
         }
     }
@@ -330,7 +416,7 @@ public class UI {
     public void deleteActivity()
     {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter the index: ");
         int index = sc.nextInt();
         this.ctrl.deleteActivityByIndex(index);
@@ -339,10 +425,20 @@ public class UI {
     public void deleteDiscipline()
     {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         System.out.println("Please enter the index: ");
         int index = sc.nextInt();
         this.ctrl.deleteDisciplineByIndex(index);
+    }
+
+    public void deleteRelation()
+    {
+        Scanner sc = new Scanner(System.in);
+        //sc.nextLine();
+        System.out.println("Please enter the index: ");
+        int index = sc.nextInt();
+
+        this.ctrl.deleteRelationByIndex(index);
     }
 
     public void delete()
@@ -355,6 +451,7 @@ public class UI {
             System.out.println("1.Delete teacher");
             System.out.println("2.Delete activity");
             System.out.println("3.Delete discipline");
+            System.out.println("4.Delete relation");
 
             System.out.println("Please choose an option: ");
             choice = sc.nextInt();
@@ -370,6 +467,9 @@ public class UI {
                 case 3:
                     this.deleteDiscipline();
                     break;
+                case 4:
+                    this.deleteRelation();
+                    break;
             }
         }
     }
@@ -377,6 +477,55 @@ public class UI {
     public void run()
     {
         Scanner sc = new Scanner(System.in);
+        Teacher t1 = new Teacher("Mihai");
+        Teacher t2 = new Teacher("Rares");
+        Teacher t3 = new Teacher("Catalin");
+        Teacher t4 = new Teacher("Cosmin");
+        Teacher t5 = new Teacher("Gabi");
+
+        this.ctrl.addTeacher(t1);
+        this.ctrl.addTeacher(t2);
+        this.ctrl.addTeacher(t3);
+        this.ctrl.addTeacher(t4);
+        this.ctrl.addTeacher(t5);
+
+       Activity a1 = new Activity("Activity0");
+       Activity a2 = new Activity("Activity1");
+       Activity a3 = new Activity("Activity2");
+       Activity a4 = new Activity("Activity3");
+       Activity a5 = new Activity("Activity4");
+
+       this.ctrl.addActivity(a1);
+       this.ctrl.addActivity(a2);
+       this.ctrl.addActivity(a3);
+       this.ctrl.addActivity(a4);
+       this.ctrl.addActivity(a5);
+
+       Discipline d1 = new Discipline("Discipline0");
+       Discipline d2 = new Discipline("Discipline1");
+       Discipline d3 = new Discipline("Discipline2");
+       Discipline d4 = new Discipline("Discipline3");
+       Discipline d5 = new Discipline("Discipline4");
+
+       this.ctrl.addDiscipline(d1);
+       this.ctrl.addDiscipline(d2);
+       this.ctrl.addDiscipline(d3);
+       this.ctrl.addDiscipline(d4);
+       this.ctrl.addDiscipline(d5);
+
+       Relation<String> r1 = new Relation<>("Mihai","Activity0");
+       Relation<String> r2 = new Relation<>("Mihai","Activity1");
+       Relation<String> r3 = new Relation<>("Gabi","Activity2");
+       Relation<String> r4 = new Relation<>("Catalin","Activity3");
+       Relation<String> r5 = new Relation<>("Catalin","Activity4");
+
+       this.ctrl.addRelation(r1);
+       this.ctrl.addRelation(r2);
+       this.ctrl.addRelation(r3);
+       this.ctrl.addRelation(r4);
+       this.ctrl.addRelation(r5);
+
+
 
         int choice = 1;
 
@@ -406,6 +555,6 @@ public class UI {
             }
         }
 
-        System.out.println("You exit the from the application");
+        System.out.println("You exit from the application");
     }
 }
