@@ -1,6 +1,8 @@
 package Domain;
 
-public class Discipline {
+import java.io.Serializable;
+
+public class Discipline implements Serializable {
 
     private String name;
 

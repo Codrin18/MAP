@@ -1,25 +1,13 @@
 package Repository;
 
-import Domain.Teacher;
+import Domain.Relation;
+import Domain.Room;
 
 import java.io.*;
-import java.util.ArrayList;
 
-public class TeacherRepo extends Repository<Teacher> {
+public class RelationRepo extends Repository<Relation> {
 
     private String filename;
-
-    public TeacherRepo(String filename)
-    {
-        this.filename = filename;
-        readFile(filename);
-    }
-
-    @Override
-    public void addElem(Teacher newElem) {
-        super.addElem(newElem);
-        writeFile(filename);
-    }
 
     public void readFile(String filename)
     {
@@ -34,8 +22,8 @@ public class TeacherRepo extends Repository<Teacher> {
                 String[] elems = line.split("[|]");
                 if (elems.length != 1)
                     continue;
-                Teacher t = new Teacher(elems[0]);
-                this.objects.add(t);
+                Relation<String> r = new Relation<>(elems[0],elems[1]);
+                this.objects.add(r);
             }
 
         } catch (FileNotFoundException e) {
@@ -63,9 +51,10 @@ public class TeacherRepo extends Repository<Teacher> {
         {
             bw = new BufferedWriter(new FileWriter(filename));
 
-            for(Teacher t: objects)
+            for(Relation<String> r: objects)
             {
-                bw.write(t.getName());
+                bw.write(r.getKey1());
+                bw.write(r.getKey2());
                 bw.newLine();
             }
         }

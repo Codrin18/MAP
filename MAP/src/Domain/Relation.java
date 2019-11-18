@@ -1,6 +1,8 @@
 package Domain;
 
-public class Relation<Type> {
+import java.io.Serializable;
+
+public class Relation<Type> implements Serializable {
     private Type key1;
     private Type key2;
 

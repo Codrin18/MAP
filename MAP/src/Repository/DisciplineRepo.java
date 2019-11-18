@@ -1,22 +1,21 @@
 package Repository;
 
-import Domain.Teacher;
+import Domain.Activity;
+import Domain.Discipline;
 
 import java.io.*;
-import java.util.ArrayList;
 
-public class TeacherRepo extends Repository<Teacher> {
+public class DisciplineRepo extends Repository<Discipline> {
 
     private String filename;
 
-    public TeacherRepo(String filename)
-    {
+    public DisciplineRepo(String filename) {
         this.filename = filename;
         readFile(filename);
     }
 
     @Override
-    public void addElem(Teacher newElem) {
+    public void addElem(Discipline newElem) {
         super.addElem(newElem);
         writeFile(filename);
     }
@@ -34,8 +33,8 @@ public class TeacherRepo extends Repository<Teacher> {
                 String[] elems = line.split("[|]");
                 if (elems.length != 1)
                     continue;
-                Teacher t = new Teacher(elems[0]);
-                this.objects.add(t);
+                Discipline d = new Discipline(elems[0]);
+                this.objects.add(d);
             }
 
         } catch (FileNotFoundException e) {
@@ -63,9 +62,9 @@ public class TeacherRepo extends Repository<Teacher> {
         {
             bw = new BufferedWriter(new FileWriter(filename));
 
-            for(Teacher t: objects)
+            for(Discipline d: objects)
             {
-                bw.write(t.getName());
+                bw.write(d.getName());
                 bw.newLine();
             }
         }

@@ -1,6 +1,8 @@
 package Domain;
 
-public class Activity {
+import java.io.Serializable;
+
+public class Activity implements Serializable {
 
     private String name;
     private String activityType;

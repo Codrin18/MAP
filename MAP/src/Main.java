@@ -48,10 +48,10 @@ public class Main {
 
             if (props.getProperty("Repository").equals("text file"))
             {
-                TeacherRepo teacherRepository = new TeacherRepo();
+                TeacherRepo teacherRepository = new TeacherRepo(props.getProperty("Teachers"));
                 Repository<Discipline> disciplineRepository = new Repository<Discipline>();
                 Repository<Activity> activityRepository = new Repository<Activity>();
-                teacherRepository.readFile(props.getProperty("Teachers"));
+                //teacherRepository.readFile(props.getProperty("Teachers"));
                 Controller ctrl = new Controller(teacherRepository, activityRepository, disciplineRepository);
                 //ctrl.readTeachers(props.getProperty("Teachers"));
                 ctrl.readActivities(props.getProperty("Activities"));
