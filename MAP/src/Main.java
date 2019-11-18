@@ -5,7 +5,11 @@ import Domain.Teacher;
 import Repository.Repository;
 import Repository.TeacherRepo;
 import Repository.TeacherBinaryRepo;
-
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import java.io.*;
 import java.util.Properties;
 
