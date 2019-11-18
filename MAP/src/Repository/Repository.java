@@ -1,10 +1,18 @@
 package Repository;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class Repository<TElem> {
 
-    private ArrayList<TElem> objects = new ArrayList<TElem>();
+    protected ArrayList<TElem> objects = new ArrayList<TElem>();
+    //private Properties prop = new Properties();
+
+
 
     public void addElem(TElem newElem)
     {
@@ -30,4 +38,6 @@ public class Repository<TElem> {
     {
          this.objects.remove(index);
     }
+
+
 }

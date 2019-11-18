@@ -12,8 +12,8 @@ public class UI {
 
     private Controller ctrl;
 
-    public UI() {
-        this.ctrl = new Controller();
+    public UI(Controller ctrl) {
+        this.ctrl = ctrl;
     }
 
     public void addTeacher()
@@ -34,8 +34,10 @@ public class UI {
         //sc.nextLine();
         System.out.println("Please enter a name for the activity: ");
         String name = sc.nextLine();
+        System.out.println("Please enter an activity type: ");
+        String activityType = sc.nextLine();
 
-        Activity a = new Activity(name);
+        Activity a = new Activity(name,activityType);
 
         this.ctrl.addActivity(a);
     }
@@ -341,6 +343,7 @@ public class UI {
         //sc.nextLine();
         System.out.println("Please enter the new name: ");
         String name = sc.nextLine();
+
         this.ctrl.updateActivityByIndex(index,name);
     }
 
@@ -476,7 +479,7 @@ public class UI {
 
     public void run()
     {
-        Scanner sc = new Scanner(System.in);
+       /** Scanner sc = new Scanner(System.in);
         Teacher t1 = new Teacher("Mihai");
         Teacher t2 = new Teacher("Rares");
         Teacher t3 = new Teacher("Catalin");
@@ -525,8 +528,8 @@ public class UI {
        this.ctrl.addRelation(r4);
        this.ctrl.addRelation(r5);
 
-
-
+        **/
+        Scanner sc = new Scanner(System.in);
         int choice = 1;
 
         while(choice != 0)

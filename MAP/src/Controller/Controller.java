@@ -1,11 +1,12 @@
 package Controller;
 
-import Domain.Activity;
-import Domain.Discipline;
-import Domain.Relation;
-import Domain.Teacher;
+import Domain.*;
 import Repository.Repository;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
@@ -13,12 +14,14 @@ public class Controller {
     private Repository<Teacher> teacherRepo;
     private Repository<Activity> activityRepo;
     private Repository<Discipline> disciplineRepo;
+    private Repository<Room> roomRepo;
     private Repository<Relation> relationRepo;
 
-    public Controller() {
-        this.teacherRepo = new Repository<Teacher>() ;
-        this.activityRepo = new Repository<Activity>();
-        this.disciplineRepo = new Repository<Discipline>();
+    public Controller(Repository<Teacher> teacherRepo,Repository<Activity> activityRepo,Repository<Discipline> disciplineRepo) {
+        this.teacherRepo = teacherRepo;
+        this.activityRepo = activityRepo;
+        this.disciplineRepo = disciplineRepo;
+        this.roomRepo = new Repository<Room>();
         this.relationRepo = new Repository<Relation>();
     }
 
@@ -37,6 +40,8 @@ public class Controller {
         this.disciplineRepo.addElem(newDiscipline);
     }
 
+    public void addRoom(Room newRomm) { this.roomRepo.addElem(newRomm);}
+
     public void addRelation(Relation newRelation) { this.relationRepo.addElem(newRelation);}
 
     public ArrayList<Teacher> getAllTeachers()
@@ -53,6 +58,8 @@ public class Controller {
     {
         return this.disciplineRepo.getAllElems();
     }
+
+    public ArrayList<Room> getAllRooms() { return this.roomRepo.getAllElems(); }
 
     public ArrayList<Relation> getAllRelations()
     {
@@ -73,6 +80,11 @@ public class Controller {
     public Discipline getDisciplineByIndex(int index)
     {
         return this.disciplineRepo.getByIndex(index);
+    }
+
+    public Room getRoomByIndex(int index)
+    {
+        return this.roomRepo.getByIndex(index);
     }
 
     public Relation getRelationByIndex(int index)
@@ -102,6 +114,14 @@ public class Controller {
         this.disciplineRepo.setAtIndex(d,index);
     }
 
+    public void updateRoomByIndex(int index,String newIdRoom,String building)
+    {
+        Room r = this.roomRepo.getByIndex(index);
+        r.setBuilding(building);
+        r.setIdRoom(newIdRoom);
+        this.roomRepo.setAtIndex(r,index);
+    }
+
     public void updateRelationByIndex(int index,String key1,String key2)
     {
         Relation<String> r = this.relationRepo.getByIndex(index);
@@ -125,5 +145,109 @@ public class Controller {
         this.disciplineRepo.deleteByIndex(index);
     }
 
+    public void deleteRoomByIndex(int index) { this.roomRepo.deleteByIndex(index);}
+
     public void deleteRelationByIndex(int index) { this.relationRepo.deleteByIndex(index);}
+
+    public  void readTeachers(String filename)
+    {
+        BufferedReader br = null;
+
+        try
+        {
+            br = new BufferedReader(new FileReader(filename));
+            String line = null;
+            while ((line = br.readLine()) != null)
+            {
+                String[] elems = line.split("[|]");
+                if (elems.length != 1)
+                    continue;
+                Teacher t = new Teacher(elems[0]);
+                this.teacherRepo.addElem(t);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (br != null)
+                try {
+                    br.close();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("Error while closing the file " + e);
+                }
+        }
+    }
+
+    public void readDisciplines(String filename)
+    {
+        BufferedReader br = null;
+
+        try
+        {
+            br = new BufferedReader(new FileReader(filename));
+            String line = null;
+            while ((line = br.readLine()) != null)
+            {
+                String[] elems = line.split("[|]");
+                if (elems.length != 1)
+                    continue;
+                Discipline d = new Discipline(elems[0]);
+                this.disciplineRepo.addElem(d);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (br != null)
+                try {
+                    br.close();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("Error while closing the file " + e);
+                }
+        }
+    }
+
+    public void readActivities(String filename)
+    {
+        BufferedReader br = null;
+
+        try
+        {
+            br = new BufferedReader(new FileReader(filename));
+            String line = null;
+            while ((line = br.readLine()) != null)
+            {
+                String[] elems = line.split("[|]");
+                if (elems.length < 2)
+                    continue;
+                Activity a = new Activity(elems[0],elems[1]);
+                this.activityRepo.addElem(a);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (br != null)
+                try {
+                    br.close();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("Error while closing the file " + e);
+                }
+        }
+    }
 }
