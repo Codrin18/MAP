@@ -3,7 +3,9 @@ import Domain.Activity;
 import Domain.Discipline;
 import Domain.Teacher;
 import Repository.Repository;
+import Repository.ActivityDatabseRepo;
 import Repository.TeacherRepo;
+import Repository.TeacherDatabaseRepo;
 import Repository.TeacherBinaryRepo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -52,37 +54,39 @@ public class Main {
 
             if (props.getProperty("Repository").equals("text file"))
             {
-                TeacherRepo teacherRepository = new TeacherRepo(props.getProperty("Teachers"));
+                TeacherDatabaseRepo teacherDatabaseRepo = new TeacherDatabaseRepo();
                 Repository<Discipline> disciplineRepository = new Repository<Discipline>();
-                Repository<Activity> activityRepository = new Repository<Activity>();
+                ActivityDatabseRepo activityRepository = new ActivityDatabseRepo();
                 //teacherRepository.readFile(props.getProperty("Teachers"));
-                Controller ctrl = new Controller(teacherRepository, activityRepository, disciplineRepository);
+                Controller ctrl = new Controller(teacherDatabaseRepo, activityRepository, disciplineRepository);
                 //ctrl.readTeachers(props.getProperty("Teachers"));
-                ctrl.readActivities(props.getProperty("Activities"));
+                //ctrl.readActivities(props.getProperty("Activities"));
                 ctrl.readDisciplines(props.getProperty("Disciplines"));
                 UI app = new UI(ctrl);
                 app.run();
             }
             else {
-                Repository<Teacher> teacherBinaryRepo = new TeacherBinaryRepo(props.getProperty("Teachers"));
+                TeacherDatabaseRepo teacherDatabaseRepo = new TeacherDatabaseRepo();
                 Repository<Discipline> disciplineRepository = new Repository<Discipline>();
-                Repository<Activity> activityRepository = new Repository<Activity>();
-                Teacher t = new Teacher("Teacher0");
+                ActivityDatabseRepo activityRepository = new ActivityDatabseRepo();
+                /*Teacher t = new Teacher("Teacher0");
                 Teacher t1 = new Teacher("Teacher1");
                 Teacher t3 = new Teacher("Teacher2");
                 Teacher t4 = new Teacher("Teacher3");
                     teacherBinaryRepo.addElem(t);
                     teacherBinaryRepo.addElem(t1);
                     teacherBinaryRepo.addElem(t3);
-                    teacherBinaryRepo.addElem(t4);
+                    teacherBinaryRepo.addElem(t4);*/
 
 
-                Controller ctrl = new Controller(teacherBinaryRepo, activityRepository, disciplineRepository);
+                Controller ctrl = new Controller(teacherDatabaseRepo, activityRepository, disciplineRepository);
                 //ctrl.readTeachers(props.getProperty("Teachers"));
-                ctrl.readActivities(props.getProperty("Activities"));
+                //ctrl.readActivities(props.getProperty("Activities"));
                 ctrl.readDisciplines(props.getProperty("Disciplines"));
                 UI app = new UI(ctrl);
                 app.run();
+                teacherDatabaseRepo.closeConnection();
+                activityRepository.closeConnection();
             }
             reader.close();
         } catch (FileNotFoundException ex) {
@@ -90,5 +94,7 @@ public class Main {
         } catch (IOException ex) {
             // I/O error
         }
+
+
     }
 }

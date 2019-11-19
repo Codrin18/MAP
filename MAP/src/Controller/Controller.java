@@ -2,22 +2,25 @@ package Controller;
 
 import Domain.*;
 import Repository.Repository;
-
+import Repository.TeacherDatabaseRepo;
+import Repository.ActivityDatabseRepo;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Controller {
 
-    private Repository<Teacher> teacherRepo;
-    private Repository<Activity> activityRepo;
+    private TeacherDatabaseRepo teacherRepo;
+    private ActivityDatabseRepo activityRepo;
     private Repository<Discipline> disciplineRepo;
     private Repository<Room> roomRepo;
     private Repository<Relation> relationRepo;
 
-    public Controller(Repository<Teacher> teacherRepo,Repository<Activity> activityRepo,Repository<Discipline> disciplineRepo) {
+    public Controller(TeacherDatabaseRepo teacherRepo,ActivityDatabseRepo activityRepo,Repository<Discipline> disciplineRepo) {
         this.teacherRepo = teacherRepo;
         this.activityRepo = activityRepo;
         this.disciplineRepo = disciplineRepo;
@@ -130,9 +133,9 @@ public class Controller {
         this.relationRepo.setAtIndex(r,index);
     }
 
-    public void deleteTeacherByIndex(int index)
+    public void deleteTeacherByIndex(Teacher t)
     {
-        this.teacherRepo.deleteByIndex(index);
+        this.teacherRepo.removeElem(t);
     }
 
     public void deleteActivityByIndex(int index)
@@ -160,9 +163,9 @@ public class Controller {
             while ((line = br.readLine()) != null)
             {
                 String[] elems = line.split("[|]");
-                if (elems.length != 1)
+                if (elems.length != 2)
                     continue;
-                Teacher t = new Teacher(elems[0]);
+                Teacher t = new Teacher(elems[0],elems[1]);
                 this.teacherRepo.addElem(t);
             }
 
@@ -250,4 +253,6 @@ public class Controller {
                 }
         }
     }
+
+
 }

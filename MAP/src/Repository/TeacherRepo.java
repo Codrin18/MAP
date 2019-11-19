@@ -32,9 +32,9 @@ public class TeacherRepo extends Repository<Teacher> {
             while ((line = br.readLine()) != null)
             {
                 String[] elems = line.split("[|]");
-                if (elems.length != 1)
+                if (elems.length != 2)
                     continue;
-                Teacher t = new Teacher(elems[0]);
+                Teacher t = new Teacher(elems[0],elems[1]);
                 this.objects.add(t);
             }
 

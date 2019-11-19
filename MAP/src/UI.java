@@ -3,9 +3,11 @@ import Domain.Activity;
 import Domain.Discipline;
 import Domain.Relation;
 import Domain.Teacher;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UI {
@@ -23,7 +25,9 @@ public class UI {
         //sc.nextLine();
         System.out.println("Please enter a name for the teacher: ");
         String name =  sc.nextLine();
-        Teacher t = new Teacher(name);
+        System.out.println("Please enter the rank: ");
+        String rank = sc.nextLine();
+        Teacher t = new Teacher(name,rank);
 
         this.ctrl.addTeacher(t);
     }
@@ -410,10 +414,11 @@ public class UI {
     public void deleteTeacher()
     {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
-        System.out.println("Please enter the index: ");
-        int index = sc.nextInt();
-        this.ctrl.deleteTeacherByIndex(index);
+        System.out.println("Please enter the name: ");
+        String  name = sc.nextLine();
+        System.out.println("Please enter the rank");
+        String rank = sc.nextLine();
+        this.ctrl.deleteTeacherByIndex(new Teacher(name,rank));
     }
 
     public void deleteActivity()
@@ -456,6 +461,7 @@ public class UI {
             System.out.println("3.Delete discipline");
             System.out.println("4.Delete relation");
 
+
             System.out.println("Please choose an option: ");
             choice = sc.nextInt();
 
@@ -476,6 +482,53 @@ public class UI {
             }
         }
     }
+
+    public void teacherStream(){
+        List<Teacher> teachers = new ArrayList<>();
+
+        teachers = this.ctrl.getAllTeachers();
+
+        teachers.stream()
+                .sorted((t1,t2) -> t1.getName().compareTo(t2.getName()))
+                .forEach(System.out::println);
+            
+        }
+
+        public void activityStream(){
+            List<Activity> activities = new ArrayList<>();
+
+            activities = this.ctrl.getAllActivities();
+
+            activities.stream()
+                    .sorted((a1,a2) -> a1.getName().compareTo(a2.getName()))
+                    .forEach(System.out::println);
+        }
+        
+    public void StreamOperations(){
+        Scanner sc = new Scanner(System.in);
+
+        int choice = 1;
+        while(choice != 0)
+        {
+            System.out.println("1.Sort teachers");
+            System.out.println("2.Sort activity");
+            System.out.println("3.Sort formation");
+            System.out.println("Please choose an option: ");
+            choice = sc.nextInt();
+
+            switch (choice)
+            {
+                case 1:
+                    this.teacherStream();
+                    break;
+                case 2:
+                    this.activityStream();
+                    break;
+
+            }
+        }
+    }
+
 
     public void run()
     {
@@ -538,6 +591,7 @@ public class UI {
             System.out.println("2. Retrieve");
             System.out.println("3. Update");
             System.out.println("4. Delete");
+            System.out.println("5. Stream operations");
 
             choice = sc.nextInt();
 
@@ -555,6 +609,8 @@ public class UI {
                 case 4:
                     this.delete();
                     break;
+                case 5:
+                    this.StreamOperations();
             }
         }
 
