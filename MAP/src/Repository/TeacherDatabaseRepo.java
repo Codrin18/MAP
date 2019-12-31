@@ -17,7 +17,7 @@ public class TeacherDatabaseRepo extends Repository<Teacher> {
     public TeacherDatabaseRepo(){
         openConnection();
         createTable();
-        init();
+        //init();
     }
 
     public void openConnection(){

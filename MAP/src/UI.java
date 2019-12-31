@@ -489,6 +489,7 @@ public class UI {
         teachers = this.ctrl.getAllTeachers();
 
         teachers.stream()
+                .filter(t -> t.getName() != null)
                 .sorted((t1,t2) -> t1.getName().compareTo(t2.getName()))
                 .forEach(System.out::println);
             
