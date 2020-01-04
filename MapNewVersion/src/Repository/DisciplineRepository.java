@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class DisciplineRepository extends Database {
     public DisciplineRepository() {
-        super("Disciplines","(name STRING PRIMARY KEY");
+        super("Disciplines","(name STRING PRIMARY KEY)");
     }
 
     public void addDiscipline(Discipline d){
